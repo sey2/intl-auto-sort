@@ -1,4 +1,4 @@
-package org.jetbrains.plugins.template
+package com.github.sey2.intlautosort
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
