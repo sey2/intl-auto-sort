@@ -14,7 +14,7 @@ class SaveDocumentListener(private val project: Project) : DocumentListener {
         val virtualFile = VirtualFileManager.getInstance().findFileByUrl(document.toString())
 
         if (virtualFile != null && (virtualFile.extension == FileExtensionType.arb.name || virtualFile.extension == FileExtensionType.json.name)) {
-            SortIntlAction().sortJsonFile(project, virtualFile)
+            SortIntlAction().handleJsonSorting(project, virtualFile)
         }
     }
 }
