@@ -20,10 +20,14 @@ class SortJsonFileUseCase(
             }
         }
     }.onFailure { ex ->
-        if (ex is MalformedJsonException) {
-            handleJsonSyntaxError(project, file, ex)
-        } else {
-            throw ex
+        when (ex) {
+            is MalformedJsonException -> {
+                handleJsonSyntaxError(project, file, ex)
+            }
+
+            else -> {
+                throw ex
+            }
         }
     }
 
@@ -34,22 +38,24 @@ class SortJsonFileUseCase(
             "There is a syntax error in the JSON file: ${ex.message}"
         )
 
-        val fixedContent = jsonFixer.fixMalformedJson(fileService.readFile(file))
-        fixedContent.onSuccess { content ->
-            tryToSortFixedJson(project, file, content)
-        }.onFailure {
-            NotificationService.showErrorNotification(
-                project,
-                "Fix Unsuccessful",
-                "Unable to automatically fix the JSON syntax."
-            )
+        jsonFixer.fixMalformedJson(fileService.readFile(file)).run {
+            onSuccess { content ->
+                tryToSortFixedJson(project, file, content)
+            }.onFailure {
+                NotificationService.showErrorNotification(
+                    project,
+                    "Fix Unsuccessful",
+                    "Unable to automatically fix the JSON syntax."
+                )
+            }
         }
     }
 
     private fun tryToSortFixedJson(project: Project, file: VirtualFile, fixedContent: String) {
         runCatching {
-            val sortedJson = jsonSorter.sortJson(fixedContent)
-            fileService.writeFile(project, file, sortedJson)
+            jsonSorter.sortJson(fixedContent).run {
+                fileService.writeFile(project, file, this)
+            }
         }.onFailure { ex ->
             NotificationService.showErrorNotification(
                 project,
