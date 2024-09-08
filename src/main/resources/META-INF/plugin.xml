@@ -7,13 +7,10 @@
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <documentListener class="com.github.sey2.intlautosort.listeners.SaveDocumentListener"/>
-    </extensions>
-
     <actions>
         <action id="com.github.sey2.intlautosort.actions.SortIntlAction" class="com.github.sey2.intlautosort.actions.SortIntlAction" text="Sort intl Files" description="Sorts Flutter intl files by key">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt S"/>
         </action>
     </actions>
 </idea-plugin>
