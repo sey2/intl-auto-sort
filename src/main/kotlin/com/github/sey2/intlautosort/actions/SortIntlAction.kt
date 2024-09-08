@@ -3,7 +3,7 @@ package com.github.sey2.intlautosort.actions
 import com.github.sey2.intlautosort.domain.json.JsonFixer
 import com.github.sey2.intlautosort.domain.json.JsonSorter
 import com.github.sey2.intlautosort.enums.FileExtensionType
-import com.github.sey2.intlautosort.domain.json.usecase.SortJsonFileUseCase
+import com.github.sey2.intlautosort.domain.usecase.SortJsonFileUseCase
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
